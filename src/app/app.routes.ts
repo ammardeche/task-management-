@@ -6,12 +6,14 @@ import { FourQuadrantsComponent } from './pages/four-quadrants/four-quadrants.co
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { LayoutComponent } from './layout/layout.component';
+import { isLoggedInGuardGuard } from './guards/is-logged-in-guard.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'layout',
-    component: LayoutComponent, // This is required
+    canActivate: [isLoggedInGuardGuard],
+    component: LayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'add', component: AddTaskComponent },

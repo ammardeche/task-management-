@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, Inject, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   FormBuilder,
@@ -16,7 +16,7 @@ import { AuthService } from '../../core/service/auth.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginForm!: FormGroup;
   snackbar = inject(MatSnackBar);
 
@@ -27,20 +27,24 @@ export class LoginComponent {
     });
   }
 
+  ngOnDestroy() {
+    this.onSubmit();
+  }
+
   onSubmit() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
     this.authService.login(email, password).subscribe({
       next: (res) => {
         this.snackbar.open('Login Successfull', 'Dismiss', {
-          duration: 2000,
+          duration: 1000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });
       },
       error: (err) => {
         this.snackbar.open('Login failed', 'Dismiss', {
-          duration: 2000,
+          duration: 1000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
         });

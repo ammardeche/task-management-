@@ -31,4 +31,8 @@ export class AuthService {
       })
     );
   }
+
+  isLoggedInValue(): boolean {
+    return this.isLoggedInSubject$.getValue();
+  }
 }
