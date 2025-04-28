@@ -15,12 +15,12 @@ export const routes: Routes = [
     canActivate: [isLoggedInGuardGuard],
     component: LayoutComponent,
     children: [
-      { path: 'dashboard', component: DashboardComponent },
+      { path: '', component: DashboardComponent },
       { path: 'add', component: AddTaskComponent },
       { path: 'levels', component: FourQuadrantsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'tasks', component: TasksListComponent },
     ],
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // or 'layout/dashboard'
+  { path: '', redirectTo: 'layout', pathMatch: 'full' },
 ];

@@ -32,6 +32,11 @@ export class AuthService {
     );
   }
 
+  logout() {
+    localStorage.removeItem(this.authtoken);
+    this.isLoggedInSubject$.next(false);
+    this.router.navigate(['/login']);
+  }
   isLoggedInValue(): boolean {
     return this.isLoggedInSubject$.getValue();
   }
