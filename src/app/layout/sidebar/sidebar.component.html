@@ -16,7 +16,11 @@
     <!-- Top Menu -->
     <ul class="flex flex-col gap-3 space-y-2">
       <li>
-        <a routerLink="/" routerLinkActive="active-link" class="link-item">
+        <a
+          [routerLink]="['/']"
+          routerLinkActive="active-link"
+          class="link-item"
+        >
           <fa-icon [icon]="faTableColumns" class="mr-2"></fa-icon>
           <span>Dashboard</span>
         </a>
@@ -25,20 +29,20 @@
         <a
           [routerLink]="['/layout/tasks']"
           routerLinkActive="active-link"
-          class="link-item"
+          class="link-item flex flex-row items-center gap-2"
         >
-          <fa-icon [icon]="faCheckCircle" class="mr-2"></fa-icon>
+          <i class="fa-solid fa-list-check"></i>
           <span>My tasks</span>
         </a>
       </li>
-      <li>
+      <li class="">
         <a
-          routerLink="/notifications"
+          [routerLink]="['/layout/profile']"
           routerLinkActive="active-link"
-          class="link-item"
+          class="link-item flex flex-row items-center gap-2"
         >
-          <fa-icon [icon]="faBell" class="mr-2"></fa-icon>
-          <span>Notifications</span>
+          <i class="fa-regular fa-user"></i>
+          <span>Profile</span>
         </a>
       </li>
     </ul>

@@ -6,19 +6,11 @@
   color: #4a5568; /* Gray-700 */
   font-weight: 500;
   transition: all 0.2s ease;
+  background-color: transparent;
 }
 
 .link-item:hover {
-  background-color: #f7fafc; /* Gray-100 */
-}
-
-.active-link {
-  background-color: #fefcbf; /* Yellow-100 */
-  color: #1a202c; /* Gray-900 */
-  font-weight: 600;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
+  background-color: #edf2f7; /* Gray-200 */
+  color: #2d3748; /* Gray-800 */
+  text-decoration: none;
 }
