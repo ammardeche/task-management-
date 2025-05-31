@@ -20,6 +20,8 @@ export class LoginComponent implements OnDestroy {
   loginForm!: FormGroup;
   snackbar = inject(MatSnackBar);
 
+  showPassword = false;
+
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

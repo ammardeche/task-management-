@@ -28,7 +28,7 @@
     <div class="mb-8">
       <label class="block text-gray-800 mb-2 text-sm">Password</label>
       <input
-        type="password"
+        [type]="showPassword ? 'text' : 'password'"
         formControlName="password"
         placeholder="Your password"
         class="w-full px-4 py-2 rounded-md bg-[#f5f3f2] border border-transparent focus:outline-none placeholder-gray-400 text-sm"
@@ -37,6 +37,7 @@
           loginForm.get('password')?.touched
         "
       />
+      <button (click)="showPassword = !showPassword">show password</button>
       <div
         *ngIf="
           loginForm.get('password')?.invalid &&
