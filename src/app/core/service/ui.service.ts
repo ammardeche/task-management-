@@ -6,7 +6,7 @@ import { Injectable, signal } from '@angular/core';
 export class UiService {
   constructor() {}
 
-  isOpned = signal<boolean>(true);
+  isOpned = signal<boolean>(false);
 
   toggleSidebar() {
     this.isOpned.update((isOpened) => !isOpened);

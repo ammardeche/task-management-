@@ -1,32 +1,42 @@
-.link-item {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: #4a5568; /* Gray-700 */
-  font-weight: 500;
-  transition: all 0.2s ease;
-  background-color: transparent;
+.opened {
+  width: 250px;
+  padding-left: 1rem; /* Restore padding when open */
+  padding-right: 1rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
-.link-item:hover {
-  background-color: #edf2f7; /* Gray-200 */
-  color: #2d3748; /* Gray-800 */
-  text-decoration: none;
-}
-.example-container {
-  width: 500px;
-  height: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+.closed {
+  width: 60px; /* Just enough to show icons */
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
-.example-sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+.sidenav {
+  transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+  overflow-x: hidden;
 }
-
-.example-sidenav {
-  padding: 20px;
+.logo span {
+  color: #5f42ff;
+  background-image: linear-gradient(45deg, #5f42ff 50%, #a230ff 53%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.icon-gradient-hover {
+  transition: all 0.3s ease-in-out;
+}
+.logo-title {
+  background-image: linear-gradient(45deg, #5f42ff 50%, #a230ff 53%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.group:hover .icon-gradient-hover {
+  background-image: linear-gradient(45deg, #5f42ff 50%, #a230ff 53%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }

@@ -1,1 +1,79 @@
-@if (isOpenedState) { }
+<div
+  [ngClass]="isOpenedState ? 'opened' : 'closed'"
+  class="sidenav py-4 h-full bg-white border-r shadow border-gray-200 transition-all duration-300 ease-in-out overflow-hidden flex flex-col"
+>
+  <!-- Logo -->
+  <div
+    class="logo mb-10 flex flex-row justify-center gap-2 items-center transition-all duration-300"
+  >
+    <span
+      class="material-symbols-outlined text-2xl logo-title icon-gradient-hover"
+    >
+      pending_actions
+    </span>
+    <h1
+      class="font-bold logo-title text-2xl transition-all duration-300"
+      [ngClass]="{
+        'opacity-100': isOpenedState,
+        'opacity-0 hidden': !isOpenedState
+      }"
+    >
+      TASKURA
+    </h1>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content flex flex-col justify-between h-full">
+    <!-- Top Navigation -->
+    <div class="flex flex-col">
+      @for (item of navItems; track item) {
+      <a
+        [routerLink]="item.route"
+        class="nav-item flex items-center py-3 gap-4 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
+        [ngClass]="isOpenedState ? 'px-1' : 'px-4'"
+      >
+        <span
+          class="material-symbols-outlined text-gray-600 icon-gradient-hover"
+        >
+          {{ item.icon }}
+        </span>
+        <span
+          class="text-base font-medium text-gray-700 transition-opacity duration-300"
+          [ngClass]="{
+            'opacity-100': isOpenedState,
+            'opacity-0 w-0': !isOpenedState
+          }"
+        >
+          {{ item.label }}
+        </span>
+      </a>
+      }
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="flex flex-col border-t border-gray-300 pt-4">
+      @for (item of bottomItems; track item) {
+      <a
+        [routerLink]="item.route"
+        class="nav-item flex items-center py-3 gap-4 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
+        [ngClass]="isOpenedState ? 'px-1' : 'px-4'"
+      >
+        <span
+          class="material-symbols-outlined text-gray-600 icon-gradient-hover"
+        >
+          {{ item.icon }}
+        </span>
+        <span
+          class="text-base font-medium text-gray-700 transition-opacity duration-300"
+          [ngClass]="{
+            'opacity-100': isOpenedState,
+            'opacity-0 w-0': !isOpenedState
+          }"
+        >
+          {{ item.label }}
+        </span>
+      </a>
+      }
+    </div>
+  </div>
+</div>

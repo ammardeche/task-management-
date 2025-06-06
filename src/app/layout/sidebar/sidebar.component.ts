@@ -7,11 +7,12 @@ import {
   faArrowRightFromBracket,
   faFontAwesome,
 } from '@fortawesome/free-solid-svg-icons';
+import { MatIconModule } from '@angular/material/icon';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/service/auth.service';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { UiService } from '../../core/service/ui.service';
@@ -20,34 +21,29 @@ import { UiService } from '../../core/service/ui.service';
   selector: 'app-sidebar',
   imports: [
     FontAwesomeModule,
-    NgFor,
+    RouterLink,
     MatSidenavModule,
     MatButtonModule,
-    RouterLink,
-    RouterLinkActive,
+    NgClass,
+    MatIconModule,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  faTableColumns = faTableColumns;
-  faCheckCircle = faCheckCircle;
-  faBell = faBell;
-  faSliders = faSliders;
-  faArrowRightFromBracket = faArrowRightFromBracket;
-
   constructor(private authService: AuthService, private uiservice: UiService) {}
 
   get isOpenedState() {
     return this.uiservice.isOpned();
   }
   navItems = [
-    { label: 'Dashboard', icon: 'fa-solid fa-house', route: '/dashboard' },
-    { label: 'My Tasks', icon: 'fa-solid fa-tasks', route: '/tasks' },
-    { label: 'Settings', icon: 'fa-solid fa-cog', route: '/settings' },
+    { label: 'Dashboard', icon: 'monitoring', route: '' },
+    { label: 'My Tasks', icon: 'pending_actions', route: '/layout/tasks' },
+    { label: 'Level', icon: 'tenancy', route: '/layout/levels' },
   ];
+
   bottomItems = [
-    { label: 'Profile', icon: 'fa-solid fa-user', route: '/profile' },
-    { label: 'Logout', icon: 'fa-solid fa-sign-out-alt', route: '/logout' },
+    { label: 'Settings', icon: 'settings', route: '/settings' },
+    { label: 'Help', icon: 'help', route: '/help' },
   ];
 }
