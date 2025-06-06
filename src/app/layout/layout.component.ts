@@ -7,7 +7,7 @@ import { UiService } from '../core/service/ui.service';
 
 @Component({
   selector: 'app-layout',
-  imports: [HeaderComponent, SidebarComponent, FooterComponent, RouterOutlet],
+  imports: [HeaderComponent, SidebarComponent, RouterOutlet],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

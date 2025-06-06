@@ -44,6 +44,6 @@ export class SidebarComponent {
 
   bottomItems = [
     { label: 'Settings', icon: 'settings', route: '/settings' },
-    { label: 'Help', icon: 'help', route: '/help' },
+    { label: 'Help', icon: 'help', route: '/layout/help' },
   ];
 }

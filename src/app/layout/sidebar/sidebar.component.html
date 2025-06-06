@@ -7,12 +7,12 @@
     class="logo mb-10 flex flex-row justify-center gap-2 items-center transition-all duration-300"
   >
     <span
-      class="material-symbols-outlined text-2xl logo-title icon-gradient-hover"
+      class="material-symbols-outlined text-xl logo-title icon-gradient-hover"
     >
       pending_actions
     </span>
     <h1
-      class="font-bold logo-title text-2xl transition-all duration-300"
+      class="font-semibold logo-title text-lg transition-all duration-300"
       [ngClass]="{
         'opacity-100': isOpenedState,
         'opacity-0 hidden': !isOpenedState
@@ -29,16 +29,16 @@
       @for (item of navItems; track item) {
       <a
         [routerLink]="item.route"
-        class="nav-item flex items-center py-3 gap-4 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
-        [ngClass]="isOpenedState ? 'px-1' : 'px-4'"
+        class="nav-item flex items-center py-2 gap-3 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
+        [ngClass]="isOpenedState ? 'px-1' : 'px-3'"
       >
         <span
-          class="material-symbols-outlined text-gray-600 icon-gradient-hover"
+          class="material-symbols-outlined text-sm text-gray-600 icon-gradient-hover"
         >
           {{ item.icon }}
         </span>
         <span
-          class="text-base font-medium text-gray-700 transition-opacity duration-300"
+          class="text-sm font-normal text-gray-700 transition-opacity duration-300"
           [ngClass]="{
             'opacity-100': isOpenedState,
             'opacity-0 w-0': !isOpenedState
@@ -55,16 +55,16 @@
       @for (item of bottomItems; track item) {
       <a
         [routerLink]="item.route"
-        class="nav-item flex items-center py-3 gap-4 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
-        [ngClass]="isOpenedState ? 'px-1' : 'px-4'"
+        class="nav-item flex items-center py-2 gap-3 transition-all duration-200 hover:bg-gray-100 rounded-lg group"
+        [ngClass]="isOpenedState ? 'px-1' : 'px-3'"
       >
         <span
-          class="material-symbols-outlined text-gray-600 icon-gradient-hover"
+          class="material-symbols-outlined text-sm text-gray-600 icon-gradient-hover"
         >
           {{ item.icon }}
         </span>
         <span
-          class="text-base font-medium text-gray-700 transition-opacity duration-300"
+          class="text-sm font-normal text-gray-700 transition-opacity duration-300"
           [ngClass]="{
             'opacity-100': isOpenedState,
             'opacity-0 w-0': !isOpenedState

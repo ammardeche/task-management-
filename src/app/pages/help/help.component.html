@@ -1,0 +1,30 @@
+<div class="max-w-4xl mx-auto p-6">
+  <!-- Page Title -->
+  <h2 class="text-3xl font-semibold mb-6 text-gray-800">Help & FAQs</h2>
+
+  <!-- Help Introduction -->
+  <div class="mb-8 text-gray-700 text-sm leading-relaxed">
+    <p>
+      Welcome to the Help Center! Here you can find answers to the most common
+      questions about using TASKURA. Whether you need guidance on managing your
+      tasks, navigating the dashboard, or understanding features, this section
+      will assist you.
+    </p>
+    <p class="mt-4">
+      Browse the questions below or use the search function to quickly find the
+      help you need.
+    </p>
+  </div>
+
+  <!-- Accordion Help Topics -->
+  <mat-accordion multi class="bg-white rounded-lg shadow-md">
+    <mat-expansion-panel *ngFor="let faq of faqs">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="text-[#5f42ff] font-semibold"> {{ faq.question }} </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p class="bg-amber-200 p-4 rounded-b-md">{{ faq.answer }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
