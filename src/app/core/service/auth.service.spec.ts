@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpEndPointService } from './http-end-point.service';
 import { Router } from '@angular/router';
-import { IUser } from '../IUser';
+import { IUser } from '../models/IUser';
 import { of } from 'rxjs';
 
 describe('AuthService', () => {

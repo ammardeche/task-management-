@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEndPointService } from './http-end-point.service';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { IUser } from '../IUser';
+import { IUser } from '../models/IUser';
 import { Router } from '@angular/router';
 
 @Injectable({
