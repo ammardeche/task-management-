@@ -5,15 +5,30 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ITask } from '../../core/models/ITask';
 import { pipe } from 'rxjs';
+import { DatePipe, NgClass, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    NgClass,
+    NgFor,
+    DatePipe,
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = [
+    'title',
+    'description',
+    'dueDate',
+    'priority',
+    'status',
+    'tags',
+  ];
   taskList!: ITask[];
   dataSource = new MatTableDataSource<ITask>([]);
 
@@ -22,7 +37,6 @@ export class DashboardComponent implements OnInit {
     this.tasksService.getTasks$().subscribe((task) => {
       this.taskList = task;
       this.dataSource.data = this.taskList;
-
       console.log('Tasks fetched successfully: __ ', this.taskList);
     });
   }
