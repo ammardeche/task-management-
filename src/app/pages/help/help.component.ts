@@ -6,7 +6,7 @@ import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-help',
-  imports: [MatExpansionModule, MatIcon, MatCardModule, NgFor],
+  imports: [MatExpansionModule, MatCardModule, NgFor],
   templateUrl: './help.component.html',
   styleUrl: './help.component.css',
 })

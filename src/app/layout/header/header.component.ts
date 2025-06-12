@@ -11,7 +11,7 @@ import { NgClass } from '@angular/common';
 export class HeaderComponent {
   constructor(private uiService: UiService) {}
 
-  isCartOpened = signal(true);
+  isCartOpened = signal(false);
 
   toggleCart() {
     this.isCartOpened.update((state) => !state);
@@ -19,5 +19,10 @@ export class HeaderComponent {
 
   onClick() {
     this.uiService.toggleSidebar();
+  }
+
+  OnCartClick() {
+    this.uiService.toggleCart();
+    console.log('Cart toggled: ', this.uiService.isCartOpened());
   }
 }

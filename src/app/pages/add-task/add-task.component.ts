@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { UiService } from '../../core/service/ui.service';
 
 @Component({
@@ -8,5 +8,7 @@ import { UiService } from '../../core/service/ui.service';
   styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent {
-  constructor(private uiService: UiService) {}
+  constructor(private uiService: UiService) {
+    const isOpened = this.uiService.toggleCart();
+  }
 }

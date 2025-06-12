@@ -12,6 +12,9 @@ export class UiService {
   toggleCart() {
     this.isCartOpened.update((isOpened) => !isOpened);
   }
+  get cartState() {
+    return this.isCartOpened(); // Return the current value of the signal
+  }
 
   toggleSidebar() {
     this.isOpned.update((isOpened) => !isOpened);
