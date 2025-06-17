@@ -1,1 +1,132 @@
-<p class="bg-red-300">hello world</p>
+<!-- modal.component.html -->
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  <!-- Background overlay -->
+  <div class="absolute inset-0 bg-black opacity-20" aria-hidden="true"></div>
+
+  <!-- Card -->
+  <div
+    class="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="addTaskTitle"
+  >
+    <h2 id="addTaskTitle" class="text-xl font-semibold text-gray-800 mb-4">
+      Add New Task
+    </h2>
+
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="title" class="block text-gray-700 font-medium mb-1"
+          >Title</label
+        >
+        <input
+          id="title"
+          formControlName="title"
+          type="text"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter task title"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="description" class="block text-gray-700 font-medium mb-1"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="3"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter task description"
+        ></textarea>
+      </div>
+
+      <div class="mb-4 grid grid-cols-2 gap-4">
+        <div>
+          <label for="dueDate" class="block text-gray-700 font-medium mb-1"
+            >Due Date</label
+          >
+          <input
+            id="dueDate"
+            formControlName="dueDate"
+            type="date"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label for="priority" class="block text-gray-700 font-medium mb-1"
+            >Priority</label
+          >
+          <select
+            id="priority"
+            formControlName="priority"
+            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Critical">Critical</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="status" class="block text-gray-700 font-medium mb-1"
+          >Status</label
+        >
+        <select
+          id="status"
+          formControlName="status"
+          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+
+      <!-- Tags with Angular Material Chips -->
+      <mat-form-field class="w-full">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Task tags">
+          <mat-chip-row
+            *ngFor="let tag of tags"
+            (removed)="removeTag(tag)"
+            [editable]="true"
+            (edited)="editTag(tag, $event)"
+            [aria-description]="'Press enter to edit ' + tag"
+          >
+            {{ tag }}
+            <button matChipRemove [attr.aria-label]="'Remove ' + tag">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip-row>
+          <input
+            placeholder="New tag..."
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="addTag($event)"
+          />
+        </mat-chip-grid>
+      </mat-form-field>
+
+      <div class="flex justify-end space-x-3 mt-4">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="taskForm.invalid"
+          class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+        >
+          Add Task
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

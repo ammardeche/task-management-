@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ITask } from '../../core/models/ITask';
 import { pipe } from 'rxjs';
 import { DatePipe, NgClass, NgFor } from '@angular/common';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ import { DatePipe, NgClass, NgFor } from '@angular/common';
     NgClass,
     NgFor,
     DatePipe,
+    AddTaskComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -41,7 +43,6 @@ export class DashboardComponent implements OnInit {
     });
   }
   constructor(private tasksService: DataService) {}
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
