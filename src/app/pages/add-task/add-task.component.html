@@ -1,7 +1,11 @@
 <!-- modal.component.html -->
 <div class="fixed inset-0 flex items-center justify-center z-50">
   <!-- Background overlay -->
-  <div class="absolute inset-0 bg-black opacity-20" aria-hidden="true"></div>
+  <div
+    (click)="onClose()"
+    class="absolute inset-0 bg-black opacity-20"
+    aria-hidden="true"
+  ></div>
 
   <!-- Card -->
   <div
@@ -62,10 +66,10 @@
             formControlName="priority"
             class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-            <option value="Critical">Critical</option>
+            <!-- must be changed  -->
+            @for (lvl of levels; track $index) {
+            <option [value]="lvl.lvl">{{ lvl.lvl }}</option>
+            }
           </select>
         </div>
       </div>
@@ -79,6 +83,7 @@
           formControlName="status"
           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
+          <!-- must be changed  -->
           <option value="Not Started">Not Started</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
@@ -114,15 +119,22 @@
       <div class="flex justify-end space-x-3 mt-4">
         <button
           type="button"
-          (click)="onCancel()"
-          class="px-4 py-2 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+          (click)="onClose()"
+          class="px-4 py-2 cursor-pointer rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
         >
-          Cancel
+          close
+        </button>
+        <button
+          type="button"
+          (click)="onReset()"
+          class="px-4 py-2 rounded-md cursor-pointer border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+        >
+          reset
         </button>
         <button
           type="submit"
           [disabled]="taskForm.invalid"
-          class="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition"
+          class="px-4 py-2 rounded-md cursor-pointer bg-blue-600 text-white hover:bg-blue-700 transition"
         >
           Add Task
         </button>

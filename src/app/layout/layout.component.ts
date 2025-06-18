@@ -8,7 +8,7 @@ import { AddTaskComponent } from '../pages/add-task/add-task.component';
 
 @Component({
   selector: 'app-layout',
-  imports: [HeaderComponent, SidebarComponent, AddTaskComponent, RouterOutlet],
+  imports: [HeaderComponent, SidebarComponent, RouterOutlet],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })

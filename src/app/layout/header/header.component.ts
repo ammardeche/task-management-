@@ -21,8 +21,7 @@ export class HeaderComponent {
     this.uiService.toggleSidebar();
   }
 
-  OnCartClick() {
-    this.uiService.toggleCart();
-    console.log('Cart toggled: ', this.uiService.isCartOpened());
+  onAddTask() {
+    this.uiService.toggleAddTask();
   }
 }

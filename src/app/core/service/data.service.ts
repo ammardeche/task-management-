@@ -1,6 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable, resource, signal } from '@angular/core';
 import { HttpEndPointService } from './http-end-point.service';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  firstValueFrom,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { ITask } from '../models/ITask';
 
 @Injectable({
@@ -11,6 +18,7 @@ export class DataService {
 
   private TaskSubject$ = new BehaviorSubject<ITask[]>([]);
   constructor(private http: HttpEndPointService) {}
+  addToPost = signal<ITask | null>(null);
 
   getTasks(): void {
     this.http
@@ -28,5 +36,16 @@ export class DataService {
   getTasks$(): Observable<ITask[]> {
     return this.TaskSubject$.asObservable();
   }
-  updateTask(taskId: string, newState: string) {}
+
+  postTaskResource = resource({
+    request: () => this.addToPost(),
+    loader: ({ request }) => {
+      if (!request) return Promise.resolve(null);
+      return firstValueFrom(this.http.post(this.apiUrl, request));
+    },
+  });
+
+  addTask(task: ITask) {
+    this.addToPost.set(task);
+  }
 }

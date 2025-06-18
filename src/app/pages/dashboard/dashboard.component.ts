@@ -7,6 +7,7 @@ import { ITask } from '../../core/models/ITask';
 import { pipe } from 'rxjs';
 import { DatePipe, NgClass, NgFor } from '@angular/common';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { UiService } from '../../core/service/ui.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,7 +43,14 @@ export class DashboardComponent implements OnInit {
       console.log('Tasks fetched successfully: __ ', this.taskList);
     });
   }
-  constructor(private tasksService: DataService) {}
+  constructor(
+    private tasksService: DataService,
+    private uiService: UiService
+  ) {}
+
+  get isOpenedState() {
+    return this.uiService.isAddTaskOpened;
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

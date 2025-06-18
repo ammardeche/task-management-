@@ -10,15 +10,13 @@ export class UiService {
   isCartOpened = signal<boolean>(false);
   isAddTaskOpened = signal<boolean>(false);
 
+  toggleAddTask() {
+    this.isAddTaskOpened.update((isOpened) => !isOpened);
+  }
   toggleCart() {
     this.isCartOpened.update((isOpened) => !isOpened);
   }
-
   toggleSidebar() {
     this.isOpned.update((isOpened) => !isOpened);
-  }
-
-  toggleAddTask() {
-    this.isAddTaskOpened.update((isOpened) => !isOpened);
   }
 }

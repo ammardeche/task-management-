@@ -19,6 +19,8 @@ import {
 } from '@angular/forms';
 import { ITask } from '../../core/models/ITask';
 import { NgFor } from '@angular/common';
+import { ILevel } from '../../core/models/ILevel';
+import { DataService } from '../../core/service/data.service';
 
 @Component({
   selector: 'app-add-task',
@@ -41,8 +43,13 @@ export class AddTaskComponent {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
   tags: string[] = [];
+  levels = ILevel;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private uiService: UiService,
+    private dataService: DataService
+  ) {}
 
   ngOnInit(): void {
     this.taskForm = this.fb.group({
@@ -98,27 +105,28 @@ export class AddTaskComponent {
   }
 
   onSubmit() {
+    const task = this.taskForm.value;
+
     if (this.taskForm.valid) {
-      const newTask: ITask = {
-        id: this.generateId(),
-        ...this.taskForm.value,
-      };
-      console.log('Task to add:', newTask);
-      // Here you can emit the newTask or send it to service etc.
+      this.dataService.addTask(task);
+      console.log(task);
     }
   }
 
-  onCancel() {
+  onReset() {
     // Reset form and tags
     this.taskForm.reset({
       title: '',
       description: '',
       dueDate: '',
-      priority: 'Low',
+      priority: this.levels[0].lvl, // Default to 'Low'
       status: 'Not Started',
       tags: [],
     });
     this.tags = [];
+  }
+  onClose() {
+    this.uiService.toggleAddTask();
   }
 
   private generateId(): string {
