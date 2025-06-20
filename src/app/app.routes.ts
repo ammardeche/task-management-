@@ -8,6 +8,7 @@ import { TasksListComponent } from './pages/tasks-list/tasks-list.component';
 import { LayoutComponent } from './layout/layout.component';
 import { isLoggedInGuardGuard } from './guards/is-logged-in-guard.guard';
 import { HelpComponent } from './pages/help/help.component';
+import { CalendarComponent } from './pages/calendar/calendar.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
         component: DashboardComponent,
       },
       { path: 'add', component: AddTaskComponent },
+      { path: 'calendar', component: CalendarComponent },
       { path: 'levels', component: FourQuadrantsComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'tasks', component: TasksListComponent },

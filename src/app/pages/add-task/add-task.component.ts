@@ -128,8 +128,4 @@ export class AddTaskComponent {
   onClose() {
     this.uiService.toggleAddTask();
   }
-
-  private generateId(): string {
-    return Math.random().toString(36).substring(2, 9);
-  }
 }

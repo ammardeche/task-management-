@@ -8,6 +8,7 @@ import { pipe } from 'rxjs';
 import { DatePipe, NgClass, NgFor } from '@angular/common';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { UiService } from '../../core/service/ui.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ import { UiService } from '../../core/service/ui.service';
     NgFor,
     DatePipe,
     AddTaskComponent,
+    RouterLink,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',

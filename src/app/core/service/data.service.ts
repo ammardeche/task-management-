@@ -36,7 +36,7 @@ export class DataService {
   getTasks$(): Observable<ITask[]> {
     return this.TaskSubject$.asObservable();
   }
-
+  // add task using signals
   postTaskResource = resource({
     request: () => this.addToPost(),
     loader: ({ request }) => {
@@ -47,5 +47,9 @@ export class DataService {
 
   addTask(task: ITask) {
     this.addToPost.set(task);
+  }
+
+  get AddedTask() {
+    return this.addToPost;
   }
 }
