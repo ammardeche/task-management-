@@ -1,6 +1,7 @@
 <div class="dashboard p-6 min-h-screen">
   <h2 class="text-2xl font-semibold mb-6 text-gray-800">Dashboard Overview</h2>
 
+  <!-- Cards Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
     <!-- Tasks Card -->
     <div
@@ -40,7 +41,7 @@
         </p>
       </div>
       <div class="mt-4 text-sm text-purple-600 hover:underline cursor-pointer">
-        <a [routerLink]="['/layout/calendar']"> Open Calendar</a>
+        <a [routerLink]="['/layout/calendar']">Open Calendar</a>
       </div>
     </div>
 
@@ -86,7 +87,8 @@
       </div>
     </div>
   </div>
-  <!-- table of tasks -->
+
+  <!-- Tasks Section -->
   <section class="mt-8">
     <div class="mb-4 relative">
       <input
@@ -112,49 +114,124 @@
       </svg>
     </div>
 
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      class="w-full text-left text-sm text-gray-700 border border-gray-200 shadow-md rounded-md overflow-hidden"
-    >
-      <!-- Title Column -->
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Title
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
-          {{ element.title }}
-        </td>
-      </ng-container>
+    <!-- Table for Medium and Larger Screens -->
+    <div class="hidden sm:block">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="w-full text-left text-sm text-gray-700 border border-gray-200 shadow-md rounded-md overflow-hidden"
+      >
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Title
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            {{ element.title }}
+          </td>
+        </ng-container>
 
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Description
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
-          {{ element.description }}
-        </td>
-      </ng-container>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Description
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            {{ element.description }}
+          </td>
+        </ng-container>
 
-      <!-- Due Date Column -->
-      <ng-container matColumnDef="dueDate">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Due Date
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
-          {{ element.dueDate | date : "mediumDate" }}
-        </td>
-      </ng-container>
+        <!-- Due Date Column -->
+        <ng-container matColumnDef="dueDate">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Due Date
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            {{ element.dueDate | date : "mediumDate" }}
+          </td>
+        </ng-container>
 
-      <!-- Priority Column -->
-      <ng-container matColumnDef="priority">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Priority
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
+        <!-- Priority Column -->
+        <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Priority
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            <span
+              class="px-2 py-1 rounded-full text-white"
+              [ngClass]="{
+                'bg-green-500': element.priority === 'Low',
+                'bg-yellow-500': element.priority === 'Medium',
+                'bg-orange-500': element.priority === 'High',
+                'bg-red-600': element.priority === 'Critical'
+              }"
+            >
+              {{ element.priority }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Status
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            {{ element.status }}
+          </td>
+        </ng-container>
+
+        <!-- Tags Column -->
+        <ng-container matColumnDef="tags">
+          <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
+            Tags
+          </th>
+          <td mat-cell *matCellDef="let element" class="px-4 py-2">
+            <span
+              *ngFor="let tag of element.tags"
+              class="bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded"
+            >
+              {{ tag }}
+            </span>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+          class="border-b border-gray-200"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="hover:bg-gray-50"
+        ></tr>
+
+        <!-- Row shown when there is no matching data -->
+        <tr class="mat-row text-center text-gray-500" *matNoDataRow>
+          <td class="mat-cell py-4" colspan="6">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+
+    <!-- Card Layout for Small Screens -->
+    <div class="block sm:hidden space-y-4">
+      <div
+        *ngFor="let element of dataSource.data"
+        class="bg-white rounded-2xl shadow p-5 flex flex-col gap-3 hover:shadow-md transition-all"
+      >
+        <!-- Task Header -->
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-700">{{ element.title }}</h3>
           <span
-            class="px-2 py-1 rounded-full text-white"
+            class="px-2 py-1 rounded-full text-white text-xs"
             [ngClass]="{
               'bg-green-500': element.priority === 'Low',
               'bg-yellow-500': element.priority === 'Medium',
@@ -164,54 +241,64 @@
           >
             {{ element.priority }}
           </span>
-        </td>
-      </ng-container>
+        </div>
 
-      <!-- Status Column -->
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Status
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
-          {{ element.status }}
-        </td>
-      </ng-container>
+        <!-- Task Details -->
+        <div class="text-sm text-gray-500">
+          <p><strong>Description:</strong> {{ element.description }}</p>
+          <p>
+            <strong>Due Date:</strong>
+            {{ element.dueDate | date : "mediumDate" }}
+          </p>
+          <p><strong>Status:</strong> {{ element.status }}</p>
+          <p>
+            <strong>Tags:</strong>
+            <span
+              *ngFor="let tag of element.tags"
+              class="bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded"
+            >
+              {{ tag }}
+            </span>
+          </p>
+        </div>
 
-      <!-- Tags Column -->
-      <ng-container matColumnDef="tags">
-        <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
-          Tags
-        </th>
-        <td mat-cell *matCellDef="let element" class="px-4 py-2">
-          <span
-            *ngFor="let tag of element.tags"
-            class="bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded"
+        <!-- Action Buttons -->
+        <div class="flex gap-2 mt-3">
+          <button
+            class="flex-1 bg-blue-500 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-600 transition-colors"
           >
-            {{ tag }}
-          </span>
-        </td>
-      </ng-container>
+            Details
+          </button>
+          <button
+            class="flex-1 bg-yellow-500 text-white text-sm font-medium py-2 rounded-md hover:bg-yellow-600 transition-colors"
+          >
+            Edit
+          </button>
+          <button
+            class="flex-1 bg-red-500 text-white text-sm font-medium py-2 rounded-md hover:bg-red-600 transition-colors"
+          >
+            Remove
+          </button>
+        </div>
+      </div>
 
-      <tr
-        mat-header-row
-        *matHeaderRowDef="displayedColumns"
-        class="border-b border-gray-200"
-      ></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        class="hover:bg-gray-50"
-      ></tr>
+      <!-- No Data Message -->
+      <div
+        *ngIf="dataSource.data.length === 0"
+        class="text-center text-gray-500 py-4"
+      >
+        No data matching the filter "{{ input.value }}"
+      </div>
 
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row text-center text-gray-500" *matNoDataRow>
-        <td class="mat-cell py-4" colspan="6">
-          No data matching the filter "{{ input.value }}"
-        </td>
-      </tr>
-    </table>
+      <!-- Paginator for Small Screens -->
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
   </section>
 </div>
+
 @if (isOpenedState()) {
 <app-add-task></app-add-task>
 }

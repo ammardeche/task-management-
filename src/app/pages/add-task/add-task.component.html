@@ -1,4 +1,3 @@
-<!-- modal.component.html -->
 <div class="fixed inset-0 flex items-center justify-center z-50">
   <!-- Background overlay -->
   <div
@@ -7,138 +6,171 @@
     aria-hidden="true"
   ></div>
 
-  <!-- Card -->
+  <!-- Modal Card -->
   <div
-    class="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-md mx-4"
+    class="relative my-14 bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 h-[600px] flex flex-col overflow-hidden"
     role="dialog"
     aria-modal="true"
     aria-labelledby="addTaskTitle"
   >
-    <h2 id="addTaskTitle" class="text-xl font-semibold text-gray-800 mb-4">
+    <h2
+      id="addTaskTitle"
+      class="text-2xl font-bold text-gray-800 px-8 pt-8 pb-4"
+    >
       Add New Task
     </h2>
 
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-      <div class="mb-4">
-        <label for="title" class="block text-gray-700 font-medium mb-1"
-          >Title</label
-        >
-        <input
-          id="title"
-          formControlName="title"
-          type="text"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter task title"
-        />
-      </div>
-
-      <div class="mb-4">
-        <label for="description" class="block text-gray-700 font-medium mb-1"
-          >Description</label
-        >
-        <textarea
-          id="description"
-          formControlName="description"
-          rows="3"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter task description"
-        ></textarea>
-      </div>
-
-      <div class="mb-4 grid grid-cols-2 gap-4">
+    <!-- Scrollable Form Fields -->
+    <div class="overflow-y-auto px-8 flex-1">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-5">
+        <!-- Title -->
         <div>
-          <label for="dueDate" class="block text-gray-700 font-medium mb-1"
-            >Due Date</label
+          <label for="title" class="block text-gray-700 font-semibold mb-2"
+            >Title</label
           >
           <input
-            id="dueDate"
-            formControlName="dueDate"
-            type="date"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="title"
+            formControlName="title"
+            type="text"
+            class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter task title"
           />
+          @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched)
+          {
+          <p class="text-red-500 text-xs mt-1">Title is required.</p>
+          }
         </div>
+
+        <!-- Description -->
         <div>
-          <label for="priority" class="block text-gray-700 font-medium mb-1"
-            >Priority</label
+          <label
+            for="description"
+            class="block text-gray-700 font-semibold mb-2"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="3"
+            class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 placeholder:text-gray-400 placeholder:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter task description"
+          ></textarea>
+          @if (taskForm.get('description')?.invalid &&
+          taskForm.get('description')?.touched) {
+          <p class="text-red-500 text-xs mt-1">Description is required.</p>
+          }
+        </div>
+
+        <!-- Due Date & Priority -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="dueDate" class="block text-gray-700 font-semibold mb-2"
+              >Due Date</label
+            >
+            <input
+              id="dueDate"
+              formControlName="dueDate"
+              type="date"
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            @if (taskForm.get('dueDate')?.invalid &&
+            taskForm.get('dueDate')?.touched) {
+            <p class="text-red-500 text-xs mt-1">Due date is required.</p>
+            }
+          </div>
+
+          <div>
+            <label for="priority" class="block text-gray-700 font-semibold mb-2"
+              >Priority</label
+            >
+            <select
+              id="priority"
+              formControlName="priority"
+              class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              @for (lvl of levels; track $index) {
+              <option [value]="lvl.lvl">{{ lvl.lvl }}</option>
+              }
+            </select>
+            @if (taskForm.get('priority')?.invalid &&
+            taskForm.get('priority')?.touched) {
+            <p class="text-red-500 text-xs mt-1">Priority is required.</p>
+            }
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div>
+          <label for="status" class="block text-gray-700 font-semibold mb-2"
+            >Status</label
           >
           <select
-            id="priority"
-            formControlName="priority"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="status"
+            formControlName="status"
+            class="w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <!-- must be changed  -->
-            @for (lvl of levels; track $index) {
-            <option [value]="lvl.lvl">{{ lvl.lvl }}</option>
-            }
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
           </select>
+          @if (taskForm.get('status')?.invalid &&
+          taskForm.get('status')?.touched) {
+          <p class="text-red-500 text-xs mt-1">Status is required.</p>
+          }
         </div>
-      </div>
 
-      <div class="mb-4">
-        <label for="status" class="block text-gray-700 font-medium mb-1"
-          >Status</label
-        >
-        <select
-          id="status"
-          formControlName="status"
-          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <!-- must be changed  -->
-          <option value="Not Started">Not Started</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
-      </div>
+        <!-- Tags -->
+        <mat-form-field class="w-full">
+          <mat-label>Tags</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Task tags">
+            <mat-chip-row
+              *ngFor="let tag of tags"
+              (removed)="removeTag(tag)"
+              [editable]="true"
+              (edited)="editTag(tag, $event)"
+              [aria-description]="'Press enter to edit ' + tag"
+            >
+              {{ tag }}
+              <button matChipRemove [attr.aria-label]="'Remove ' + tag">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+            <input
+              placeholder="New tag..."
+              class="placeholder:text-sm placeholder:text-gray-400"
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addTag($event)"
+            />
+          </mat-chip-grid>
+        </mat-form-field>
+      </form>
+    </div>
 
-      <!-- Tags with Angular Material Chips -->
-      <mat-form-field class="w-full">
-        <mat-label>Tags</mat-label>
-        <mat-chip-grid #chipGrid aria-label="Task tags">
-          <mat-chip-row
-            *ngFor="let tag of tags"
-            (removed)="removeTag(tag)"
-            [editable]="true"
-            (edited)="editTag(tag, $event)"
-            [aria-description]="'Press enter to edit ' + tag"
-          >
-            {{ tag }}
-            <button matChipRemove [attr.aria-label]="'Remove ' + tag">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip-row>
-          <input
-            placeholder="New tag..."
-            [matChipInputFor]="chipGrid"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-            [matChipInputAddOnBlur]="addOnBlur"
-            (matChipInputTokenEnd)="addTag($event)"
-          />
-        </mat-chip-grid>
-      </mat-form-field>
-
-      <div class="flex justify-end space-x-3 mt-4">
-        <button
-          type="button"
-          (click)="onClose()"
-          class="px-4 py-2 cursor-pointer rounded-md border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
-        >
-          close
-        </button>
-        <button
-          type="button"
-          (click)="onReset()"
-          class="px-4 py-2 rounded-md cursor-pointer border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
-        >
-          reset
-        </button>
-        <button
-          type="submit"
-          [disabled]="taskForm.invalid"
-          class="px-4 py-2 rounded-md cursor-pointer bg-blue-600 text-white hover:bg-blue-700 transition"
-        >
-          Add Task
-        </button>
-      </div>
-    </form>
+    <!-- Buttons fixed at bottom -->
+    <div class="px-8 py-4 border-t border-gray-200 flex justify-end space-x-3">
+      <button
+        type="button"
+        (click)="onClose()"
+        class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        (click)="onReset()"
+        class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+      >
+        Reset
+      </button>
+      <button
+        type="submit"
+        [disabled]="taskForm.invalid"
+        class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition disabled:opacity-50"
+      >
+        Add Task
+      </button>
+    </div>
   </div>
 </div>

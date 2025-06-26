@@ -1,14 +1,15 @@
-import { Component, OnInit, Pipe } from '@angular/core';
+import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
 import { DataService } from '../../core/service/data.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ITask } from '../../core/models/ITask';
 import { pipe } from 'rxjs';
-import { DatePipe, NgClass, NgFor } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { UiService } from '../../core/service/ui.service';
 import { RouterLink } from '@angular/router';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,8 @@ import { RouterLink } from '@angular/router';
     DatePipe,
     AddTaskComponent,
     RouterLink,
+    MatPaginatorModule,
+    MatPaginator,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -36,6 +39,12 @@ export class DashboardComponent implements OnInit {
   ];
   taskList!: ITask[];
   dataSource = new MatTableDataSource<ITask>([]);
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.tasksService.getTasks();

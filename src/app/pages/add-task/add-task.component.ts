@@ -18,7 +18,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ITask } from '../../core/models/ITask';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { ILevel } from '../../core/models/ILevel';
 import { DataService } from '../../core/service/data.service';
 
@@ -54,11 +54,11 @@ export class AddTaskComponent {
   ngOnInit(): void {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
-      description: [''],
-      dueDate: [''],
-      priority: ['Low', Validators.required],
-      status: ['Not Started', Validators.required],
-      tags: [[]], // We'll sync tags array manually
+      description: ['', Validators.required],
+      dueDate: ['', Validators.required],
+      priority: ['', Validators.required],
+      status: ['', Validators.required],
+      tags: [[], Validators.required], // We'll sync tags array manually
     });
   }
 
@@ -110,6 +110,7 @@ export class AddTaskComponent {
     if (this.taskForm.valid) {
       this.dataService.addTask(task);
       console.log(task);
+      this.onReset();
     }
   }
 

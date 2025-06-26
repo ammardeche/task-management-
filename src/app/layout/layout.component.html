@@ -1,14 +1,14 @@
-<div class="flex flex-row min-h-screen">
-  <!-- Sidebar -->
-  <app-sidebar class=""></app-sidebar>
+<div class="flex h-screen">
+  <!-- Sidebar: fixed height and doesn't scroll -->
+  <app-sidebar class="shrink-0 text-white"></app-sidebar>
 
-  <!-- Right side: Header + Content -->
+  <!-- Right side: Header + Scrollable Content -->
   <div class="flex flex-col flex-1">
-    <!-- Header -->
-    <app-header></app-header>
+    <!-- Header: fixed height -->
+    <app-header class="shrink-0"></app-header>
 
-    <!-- Main Content -->
-    <div class="flex-1 p-4 overflow-auto">
+    <!-- Main content area (scrollable only here) -->
+    <div class="flex-1 overflow-auto p-4">
       <router-outlet></router-outlet>
     </div>
   </div>
