@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 import { ITask } from '../../core/models/ITask';
 import { NgFor, NgIf } from '@angular/common';
-import { ILevel } from '../../core/models/ILevel';
+import { ILevel, Levels } from '../../core/models/ILevel';
 import { DataService } from '../../core/service/data.service';
 
 @Component({
@@ -43,7 +43,7 @@ export class AddTaskComponent {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
   tags: string[] = [];
-  levels = ILevel;
+  levels = Levels;
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +61,13 @@ export class AddTaskComponent {
       tags: [[], Validators.required], // We'll sync tags array manually
     });
   }
-
+  get priority() {
+    return this.taskForm.get('priority')?.value;
+  }
+  get levelId(): string | undefined {
+    const selectedPriority = this.taskForm.get('priority')?.value;
+    return this.levels.find((level) => level.lvl === selectedPriority)?.id;
+  }
   addTag(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -105,11 +111,10 @@ export class AddTaskComponent {
   }
 
   onSubmit() {
-    const task = this.taskForm.value;
-
+    const task = this.taskForm.value as ITask;
     if (this.taskForm.valid) {
       this.dataService.addTask(task);
-      console.log(task);
+      this.dataService.addTaskToLevel(this.levelId!, task);
       this.onReset();
     }
   }

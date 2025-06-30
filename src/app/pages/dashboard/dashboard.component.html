@@ -15,8 +15,7 @@
           >
         </div>
         <p class="text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat
-          molestias.
+          Manage and track your tasks efficiently.
         </p>
       </div>
       <div class="mt-4 text-sm text-blue-600 hover:underline cursor-pointer">
@@ -36,8 +35,7 @@
           >
         </div>
         <p class="text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet magni
-          odit.
+          Check upcoming events and deadlines.
         </p>
       </div>
       <div class="mt-4 text-sm text-purple-600 hover:underline cursor-pointer">
@@ -57,13 +55,14 @@
           >
         </div>
         <p class="text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere
-          similique.
+          View progress and level achievements.
         </p>
       </div>
-      <div class="mt-4 text-sm text-green-600 hover:underline cursor-pointer">
-        Explore Levels
-      </div>
+      <a [routerLink]="['/layout/levels']">
+        <div class="mt-4 text-sm text-green-600 hover:underline cursor-pointer">
+          Explore Levels
+        </div>
+      </a>
     </div>
 
     <!-- Categories Card -->
@@ -78,8 +77,7 @@
           >
         </div>
         <p class="text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet
-          commodi.
+          Explore task categories and filters.
         </p>
       </div>
       <div class="mt-4 text-sm text-yellow-600 hover:underline cursor-pointer">
@@ -88,15 +86,15 @@
     </div>
   </div>
 
-  <!-- Tasks Section -->
-  <section class="mt-8">
+  <!-- Tasks Table Section -->
+  <section class="mt-10">
     <div class="mb-4 relative">
       <input
         #input
         (keyup)="applyFilter($event)"
         type="text"
         placeholder="Search tasks..."
-        class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+        class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <svg
         class="w-5 h-5 absolute left-3 top-2.5 text-gray-400"
@@ -114,14 +112,14 @@
       </svg>
     </div>
 
-    <!-- Table for Medium and Larger Screens -->
+    <!-- Table for Large Screens -->
     <div class="hidden sm:block">
       <table
         mat-table
         [dataSource]="dataSource"
         class="w-full text-left text-sm text-gray-700 border border-gray-200 shadow-md rounded-md overflow-hidden"
       >
-        <!-- Title Column -->
+        <!-- Columns -->
         <ng-container matColumnDef="title">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Title
@@ -131,7 +129,6 @@
           </td>
         </ng-container>
 
-        <!-- Description Column -->
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Description
@@ -141,7 +138,6 @@
           </td>
         </ng-container>
 
-        <!-- Due Date Column -->
         <ng-container matColumnDef="dueDate">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Due Date
@@ -151,7 +147,6 @@
           </td>
         </ng-container>
 
-        <!-- Priority Column -->
         <ng-container matColumnDef="priority">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Priority
@@ -171,7 +166,6 @@
           </td>
         </ng-container>
 
-        <!-- Status Column -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Status
@@ -181,7 +175,6 @@
           </td>
         </ng-container>
 
-        <!-- Tags Column -->
         <ng-container matColumnDef="tags">
           <th mat-header-cell *matHeaderCellDef class="bg-gray-100 px-4 py-2">
             Tags
@@ -190,12 +183,12 @@
             <span
               *ngFor="let tag of element.tags"
               class="bg-blue-100 text-blue-800 text-xs font-medium me-1 px-2.5 py-0.5 rounded"
+              >{{ tag }}</span
             >
-              {{ tag }}
-            </span>
           </td>
         </ng-container>
 
+        <!-- Rows -->
         <tr
           mat-header-row
           *matHeaderRowDef="displayedColumns"
@@ -207,7 +200,7 @@
           class="hover:bg-gray-50"
         ></tr>
 
-        <!-- Row shown when there is no matching data -->
+        <!-- No Data Row -->
         <tr class="mat-row text-center text-gray-500" *matNoDataRow>
           <td class="mat-cell py-4" colspan="6">
             No data matching the filter "{{ input.value }}"
@@ -221,13 +214,12 @@
       ></mat-paginator>
     </div>
 
-    <!-- Card Layout for Small Screens -->
-    <div class="block sm:hidden space-y-4">
+    <!-- Mobile Card View -->
+    <div class="block sm:hidden space-y-4 mt-6">
       <div
-        *ngFor="let element of dataSource.data"
+        *ngFor="let element of dataSource.filteredData"
         class="bg-white rounded-2xl shadow p-5 flex flex-col gap-3 hover:shadow-md transition-all"
       >
-        <!-- Task Header -->
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-medium text-gray-700">{{ element.title }}</h3>
           <span
@@ -242,8 +234,6 @@
             {{ element.priority }}
           </span>
         </div>
-
-        <!-- Task Details -->
         <div class="text-sm text-gray-500">
           <p><strong>Description:</strong> {{ element.description }}</p>
           <p>
@@ -261,40 +251,19 @@
             </span>
           </p>
         </div>
-
-        <!-- Action Buttons -->
         <div class="flex gap-2 mt-3">
           <button
-            class="flex-1 bg-blue-500 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-600 transition-colors"
+            class="flex-1 bg-blue-500 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-600"
           >
             Details
           </button>
           <button
-            class="flex-1 bg-yellow-500 text-white text-sm font-medium py-2 rounded-md hover:bg-yellow-600 transition-colors"
+            class="flex-1 bg-yellow-500 text-white text-sm font-medium py-2 rounded-md hover:bg-yellow-600"
           >
             Edit
           </button>
-          <button
-            class="flex-1 bg-red-500 text-white text-sm font-medium py-2 rounded-md hover:bg-red-600 transition-colors"
-          >
-            Remove
-          </button>
         </div>
       </div>
-
-      <!-- No Data Message -->
-      <div
-        *ngIf="dataSource.data.length === 0"
-        class="text-center text-gray-500 py-4"
-      >
-        No data matching the filter "{{ input.value }}"
-      </div>
-
-      <!-- Paginator for Small Screens -->
-      <mat-paginator
-        [pageSizeOptions]="[5, 10, 20]"
-        showFirstLastButtons
-      ></mat-paginator>
     </div>
   </section>
 </div>
